@@ -16,11 +16,12 @@ module.exports = {
   node: {
     __dirname: true // 防止路径出错
   },
-  entry: resolvePath('./xWebServer.js'), //入口文件
+  entry: resolvePath('./index.js'), //入口文件
   output: {
-    filename: 'index.js',
-    path: resolvePath('../serverDist'),
+    filename: 'index0.js',
+    path: resolvePath('./'),
   },
+  devtool: "source-map",
   // externals: [nodeExternals()],
   module: {
     rules: [

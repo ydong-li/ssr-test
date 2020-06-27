@@ -1,16 +1,23 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import App from './App';
-import Child from './child'
+// import App from './App';
+// import Child from './child'
 import * as serviceWorker from './serviceWorker';
+import {Router, browserHistory} from 'react-router'
+import routeConfig from './route'
+
+// ReactDOM.hydrate(
+//   <React.StrictMode>
+//     <App>
+//       <Child />
+//     </App>
+//   </React.StrictMode>,
+//   document.getElementById('root')
+// );
 
 ReactDOM.hydrate(
-  <React.StrictMode>
-    <App>
-      <Child />
-    </App>
-  </React.StrictMode>,
+  <Router routes={routeConfig} history={browserHistory} />,
   document.getElementById('root')
 );
 

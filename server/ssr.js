@@ -1,36 +1,72 @@
-import React from 'react';
-import { matchRoutes } from 'react-router-config';
-const { renderToString } = require('react-dom/server');
-import clientRoutes from '../src/route'
-const path = require('path')
+// import clientRoutes from "../src/route";
+import React from "react";
+import { matchRoutes } from "react-router-config";
+import { renderToString } from "react-dom/server";
+const path = require("path");
 const fs = require("fs");
-import App from '../src/App'
+import Foo from '../src/foo'
 
-const Loading = () => {
-  return <div>loading ...</div>
-}
+// global
+let clientRoutes = []
 
-const template = fs.readFileSync(path.resolve(__dirname, '../build/index.html'), 'utf8')
+const template = fs.readFileSync(
+  path.resolve(__dirname, "../build/index.html"),
+  "utf8"
+);
 
-export default app => {
-  console.log(123)
-  app.use(async function (req, res, next) {
-    // console.log(req)
-    // if (req.is('*/html')) {
-    const { path } = req;
-    const branch = matchRoutes(clientRoutes, path);
-    //得到要渲染的组件
-    const Component = branch[0].route.component;
-    console.log(Component)
-    const data = {}
-    //将组件渲染为 html 字符串
-    const componentContent = renderToString(Component ? <App><Component data={data} /></App> : <Loading />);
+const isPageRequest = (req) => /text\/html/.test(req.headers.accept);
 
+export default (app) => {
+  console.log(123);
 
-    res.end(template.replace(/<div id\=\"root\"><\/div>/,
-      `<div id="root">${componentContent}</div>`
-    ));
-    // }
-    next();
+  app.get('/content', (req, res) => {
+    res.send(renderToString(<Foo />))
   })
+
+  app.post("/patchRoute", (req, res) => {
+    console.log("req is: ", req.body);
+    clientRoutes = req.body.data;
+    res.send("oker");
+  });
+
+  app.use(async function (req, res, next) {
+    if (clientRoutes.length === 0) {
+      res.end("ok2");
+      return;
+    }
+    console.log("Accept: ", /text\/html/.test(req.headers.accept));
+    if (isPageRequest(req)) {
+      console.log("clientRoutes: ", clientRoutes);
+      const { path } = req;
+      console.log("path is ", path);
+      // const branch = matchRoutes(clientRoutes, path);
+      // console.log(branch);
+      // //得到要渲染的组件
+      // console.log(branch[0]);
+      const Component = clientRoutes[0].component;
+      var RenderFunction
+      // const componentFunString = Component.replace(/function\s*\(/, 'function RenderFunction (')
+      const componentFunString = `RenderFunction = ${Component}`
+      console.log(componentFunString)
+      eval(componentFunString)
+      //将组件渲染为 html 字符串
+      try {
+        console.log(RenderFunction)
+        const componentContent = renderToString(<RenderFunction />);
+        console.log(componentContent);
+
+        res.end(componentContent);
+      } catch (e) {
+        console.warn(e);
+      }
+
+      // res.end(
+      //   template.replace(
+      //     /<div id="root"><\/div>/,
+      //     `<div id="root">${componentContent}</div>`
+      //   )
+      // );
+    }
+    next();
+  });
 };

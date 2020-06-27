@@ -3,6 +3,10 @@ import React from 'react';
 import './App.css';
 
 function App({ children }) {
+  // useEffect(() => {
+    window.NUMBER = 7
+  // }, [])
+
   return (
     <div className="App">
       <header className="App-header">
