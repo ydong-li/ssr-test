@@ -1,11 +1,11 @@
-import React from 'react';
+import React, { useEffect } from "react";
 // import logo from './logo.svg';
-import './App.css';
+import "./App.css";
 
 function App({ children }) {
-  // useEffect(() => {
-    window.NUMBER = 7
-  // }, [])
+  useEffect(() => {
+    window.NUMBER = 7;
+  }, []);
 
   return (
     <div className="App">
@@ -22,9 +22,13 @@ function App({ children }) {
         >
           Learn React
         </a>
-        <button onClick={() => {
-          console.log(123123)
-        }}>click me</button>
+        <button
+          onClick={() => {
+            console.log(123123);
+          }}
+        >
+          click me
+        </button>
       </header>
       {children}
     </div>

@@ -4,12 +4,12 @@
   "private": true,
   "scripts": {
     "start": "node scripts/start.js",
-    "build": "node scripts/build.js",
+    "build": "yarn add react-router@3.2.0 && node scripts/build.js",
     "test": "node scripts/test.js",
-    "build:s": "yarn add react-router@3.2.0 && NODE_ENV=production BABEL_ENV=production webpack --config ./server/webpack.config.server.js && node --inspect serverDist/index.js",
-    "build:s0": "NODE_ENV=development BABEL_ENV=development webpack --config ./server/webpack.config.server0.js && node server/index0.js",
-    "ser": "node --inspect server/index.js",
-    "serve": "yarn add react-router && node --inspect server/index.js"
+    "build:c": "yarn add react-router@3.2.0 && NODE_ENV=production BABEL_ENV=production webpack --config ./server/webpack.config.server.js && node --inspect serverDist/index.js",
+    "build:s": "yarn add react-router && NODE_ENV=development BABEL_ENV=development webpack --config ./server/webpack.config.server0.js && node server/index0.js",
+    "server:rs": "NODE_ENV=development BABEL_ENV=development webpack --config ./server/webpack.config.server0.js && node server/index0.js",
+    "serve": "node --inspect server/index0.js"
   },
   "dependencies": {
     "@babel/core": "7.9.0",
@@ -60,7 +60,7 @@
     "react-app-polyfill": "^1.0.6",
     "react-dev-utils": "^10.2.1",
     "react-dom": "^16.13.1",
-    "react-router": "3.2.0",
+    "react-router": "^5.2.0",
     "react-router-config": "^5.1.1",
     "request-promise": "^4.2.5",
     "request-promise-native": "^1.0.8",

@@ -1,13 +1,13 @@
-// import clientRoutes from "../src/route";
+import clientRoutes from "../src/route";
 import React from "react";
 import { matchRoutes } from "react-router-config";
 import { renderToString } from "react-dom/server";
+import Foo from "../src/foo";
 const path = require("path");
 const fs = require("fs");
-import Foo from '../src/foo'
 
 // global
-let clientRoutes = []
+// let clientRoutes = []
 
 const template = fs.readFileSync(
   path.resolve(__dirname, "../build/index.html"),
@@ -17,11 +17,11 @@ const template = fs.readFileSync(
 const isPageRequest = (req) => /text\/html/.test(req.headers.accept);
 
 export default (app) => {
-  console.log(123);
+  console.log("x-web start");
 
-  app.get('/content', (req, res) => {
-    res.send(renderToString(<Foo />))
-  })
+  app.get("/content", (req, res) => {
+    res.send(renderToString(<Foo />));
+  });
 
   app.post("/patchRoute", (req, res) => {
     console.log("req is: ", req.body);
@@ -39,33 +39,31 @@ export default (app) => {
       console.log("clientRoutes: ", clientRoutes);
       const { path } = req;
       console.log("path is ", path);
-      // const branch = matchRoutes(clientRoutes, path);
+      const branch = matchRoutes(clientRoutes, path);
       // console.log(branch);
       // //得到要渲染的组件
-      // console.log(branch[0]);
-      const Component = clientRoutes[0].component;
-      var RenderFunction
-      // const componentFunString = Component.replace(/function\s*\(/, 'function RenderFunction (')
-      const componentFunString = `RenderFunction = ${Component}`
-      console.log(componentFunString)
-      eval(componentFunString)
+      console.log(branch[0]);
+      const Component = branch[0].route.component;
+      // var RenderFunction
+      // const componentFunString = `RenderFunction = ${Component}`
+      // console.log(componentFunString)
+      // eval(componentFunString)
       //将组件渲染为 html 字符串
       try {
-        console.log(RenderFunction)
-        const componentContent = renderToString(<RenderFunction />);
+        const componentContent = renderToString(<Component />);
         console.log(componentContent);
 
-        res.end(componentContent);
+        // res.end(componentContent);
+
+        res.end(
+          template.replace(
+            /<div id="root"><\/div>/,
+            `<div id="root">${componentContent}</div>`
+          )
+        );
       } catch (e) {
         console.warn(e);
       }
-
-      // res.end(
-      //   template.replace(
-      //     /<div id="root"><\/div>/,
-      //     `<div id="root">${componentContent}</div>`
-      //   )
-      // );
     }
     next();
   });

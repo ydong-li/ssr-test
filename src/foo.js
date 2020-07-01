@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 
-export default function Child() {
+export default function Foo() {
   const [num, setNum] = useState(0)
   return <>
     <p> I am foo </p>
