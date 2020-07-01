@@ -8,7 +8,7 @@
     "test": "node scripts/test.js",
     "build:c": "yarn add react-router@3.2.0 && NODE_ENV=production BABEL_ENV=production webpack --config ./server/webpack.config.server.js && node --inspect serverDist/index.js",
     "build:s": "yarn add react-router && NODE_ENV=development BABEL_ENV=development webpack --config ./server/webpack.config.server0.js && node server/index0.js",
-    "server:rs": "NODE_ENV=development BABEL_ENV=development webpack --config ./server/webpack.config.server0.js && node server/index0.js",
+    "srs": "NODE_ENV=development BABEL_ENV=development webpack --config ./server/webpack.config.server0.js && node server/index0.js",
     "serve": "node --inspect server/index0.js"
   },
   "dependencies": {

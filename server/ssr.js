@@ -50,7 +50,12 @@ export default (app) => {
       // eval(componentFunString)
       //将组件渲染为 html 字符串
       try {
-        const componentContent = renderToString(<Component />);
+        let props = Component.getInitialProps
+          ? await Component.getInitialProps()
+          : {};
+
+        console.log({ props });
+        const componentContent = renderToString(<Component {...props} />);
         console.log(componentContent);
 
         // res.end(componentContent);

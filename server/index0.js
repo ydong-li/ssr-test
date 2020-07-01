@@ -30851,14 +30851,18 @@ const isPageRequest = req => /text\/html/.test(req.headers.accept);
       //将组件渲染为 html 字符串
 
       try {
-        const componentContent = Object(react_dom_server__WEBPACK_IMPORTED_MODULE_3__["renderToString"])( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(Component, {
+        let props = Component.getInitialProps ? await Component.getInitialProps() : {};
+        console.log({
+          props
+        });
+        const componentContent = Object(react_dom_server__WEBPACK_IMPORTED_MODULE_3__["renderToString"])( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(Component, Object.assign({}, props, {
           __self: this,
           __source: {
             fileName: _jsxFileName,
-            lineNumber: 53,
+            lineNumber: 58,
             columnNumber: 49
           }
-        }));
+        })));
         console.log(componentContent); // res.end(componentContent);
 
         res.end(template.replace(/<div id="root"><\/div>/, `<div id="root">${componentContent}</div>`));
@@ -30996,15 +31000,16 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 var _jsxFileName = "/Users/caicloud/code/ssr-test/src/child.js";
 
-function Child() {
-  const initialNum = typeof window === 'undefined' ? 1 : 0;
-  const [num, setNum] = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(initialNum);
+function Child({
+  initialNum
+}) {
+  const [num, setNum] = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(initialNum || 7);
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
     __self: this,
     __source: {
       fileName: _jsxFileName,
       lineNumber: 7,
-      columnNumber: 5
+      columnNumber: 7
     }
   }, "I am Child"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
     onClick: () => setNum(num + 1),
@@ -31012,16 +31017,31 @@ function Child() {
     __source: {
       fileName: _jsxFileName,
       lineNumber: 8,
-      columnNumber: 5
+      columnNumber: 7
     }
   }, "add"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
     __self: this,
     __source: {
       fileName: _jsxFileName,
       lineNumber: 9,
-      columnNumber: 5
+      columnNumber: 7
     }
   }, num));
+}
+
+Child.getInitialProps = async () => {
+  return await InitialNum();
+};
+
+function InitialNum() {
+  return new Promise(res => {
+    setTimeout(() => {
+      const initialNum = typeof window === "undefined" ? 1 : 0;
+      res({
+        initialNum
+      });
+    }, 1000);
+  });
 }
 
 /***/ }),

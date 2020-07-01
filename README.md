@@ -8,7 +8,7 @@ SSR 测试子项目
 
 ### 只是重启`node server`:
 
-    yarn server:rs
+    yarn srs
 
 ## Available Scripts
 
