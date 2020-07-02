@@ -16,6 +16,8 @@ import routeConfig from './route'
 //   document.getElementById('root')
 // );
 
+console.log({routeConfig})
+
 ReactDOM.hydrate(
   <Router routes={routeConfig} history={browserHistory} />,
   document.getElementById('root')

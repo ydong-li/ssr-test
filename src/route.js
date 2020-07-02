@@ -1,29 +1,46 @@
 import App from "./App";
 import Child from "./child";
 import foo from "./foo";
+import ClientRender from "./clientRender";
 
 export default [
   // {
-  //   path: "/",
   //   component: App,
-  //   childRoutes: [
+  //   routes: [
   //     {
-  //       path: "b",
-  //       component: foo,
-  //     },
-  //     {
-  //       path: "c",
-  //       component: Child,
+  //       path: "/",
+  //       component: App,
+  //       exact: true,
+  //       routes: [
+  //         {
+  //           path: "/b",
+  //           component: ClientRender(foo),
+  //         },
+  //         {
+  //           path: "/c",
+  //           component: ClientRender(Child),
+  //         },
+  //       ]
   //     },
   //   ],
   // },
   {
-    path: "/b",
-    component: foo,
+    path: "/",
+    component: ClientRender(App),
+    childRoutes: [
+      {
+        path: "b",
+        component: foo,
+      },
+      {
+        path: "c",
+        // exact: true, 
+        component: Child,
+      },
+    ],
   },
-  {
-    path: "/c",
-    component: Child,
-  },
-
+  // {
+  //   path: "/c",
+  //   component: ClientRender(Child),
+  // },
 ];

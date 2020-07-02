@@ -1,7 +1,5 @@
 SSR 测试子项目
 
-因为服务端和客户端使用的`react-router`版本不同, 打包前都会重新安装这个库
-
 ### 客户端有更改:
 
     yarn build && yarn build:s

@@ -1,8 +1,23 @@
-import React, { useEffect } from "react";
+import React, { useState, useEffect, Children } from "react";
 // import logo from './logo.svg';
 import "./App.css";
 
-function App({ children }) {
+function App({ children, InitialMsg }) {
+  const [msg, setMsg] = useState(InitialMsg || "client");
+
+  // const [childProps, setChildProps] = useState({});
+
+  // let Component = null;
+  // if (children) {
+  //   Component = () => Children.only(children);
+  //   console.log(78778, Component);
+  //   if (Component.getInitialProps)
+  //     this.getInitialProps = async () => {
+  //       const props = await Component.getInitialProps;
+  //       setChildProps(props);
+  //     };
+  // }
+
   useEffect(() => {
     window.NUMBER = 7;
   }, []);
@@ -20,7 +35,7 @@ function App({ children }) {
           target="_blank"
           rel="noopener noreferrer"
         >
-          Learn React
+          Render from {msg}
         </a>
         <button
           onClick={() => {
@@ -36,3 +51,16 @@ function App({ children }) {
 }
 
 export default App;
+
+App.getInitialProps = async () => {
+  return await InitialProps();
+};
+
+function InitialProps() {
+  return new Promise((res) => {
+    setTimeout(() => {
+      const InitialMsg = typeof window === "undefined" ? "server" : "client";
+      res({ InitialMsg });
+    }, 500);
+  });
+}

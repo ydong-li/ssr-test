@@ -22,7 +22,7 @@ module.exports = {
     path: resolvePath('./'),
   },
   devtool: "source-map",
-  // externals: [nodeExternals()],
+  externals: [nodeExternals()],
   module: {
     rules: [
       {
