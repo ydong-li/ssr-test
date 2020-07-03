@@ -19,7 +19,7 @@ module.exports = {
   entry: resolvePath('./index.js'), //入口文件
   output: {
     filename: 'index0.js',
-    path: resolvePath('./'),
+    path: resolvePath('../serverDist'),
   },
   devtool: "source-map",
   externals: [nodeExternals()],

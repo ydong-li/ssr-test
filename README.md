@@ -5,7 +5,7 @@ SSR 测试子项目
     yarn && yarn build && yarn build:s
 
     
-打开  http://localhost:3777/b
+打开  http://localhost:3777/c
 
 ### 如果客户端代码有更改, 客户端和服务端的代码都需重新打包:
 
