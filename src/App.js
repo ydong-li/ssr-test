@@ -1,6 +1,7 @@
 import React, { useState, useEffect, Children } from "react";
 // import logo from './logo.svg';
 import "./App.css";
+import { timeoutPromise } from "./utils";
 
 function App({ children, InitialMsg }) {
   const [msg, setMsg] = useState(InitialMsg || "client");
@@ -20,7 +21,8 @@ function App({ children, InitialMsg }) {
 
   useEffect(() => {
     window.NUMBER = 7;
-  }, []);
+    console.log(Children.only(children).type.name);
+  }, [children]);
 
   return (
     <div className="App">
@@ -52,15 +54,11 @@ function App({ children, InitialMsg }) {
 
 export default App;
 
-App.getInitialProps = async () => {
-  return await InitialProps();
-};
+App.displayName = "App";
 
-function InitialProps() {
-  return new Promise((res) => {
-    setTimeout(() => {
-      const InitialMsg = typeof window === "undefined" ? "server" : "client";
-      res({ InitialMsg });
-    }, 500);
-  });
-}
+App.getInitialProps = async () => {
+  return await timeoutPromise(() => {
+    const InitialMsg = typeof window === "undefined" ? "server" : "client";
+    return { InitialMsg };
+  }, 10);
+};

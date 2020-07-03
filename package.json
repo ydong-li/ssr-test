@@ -4,12 +4,27 @@
   "private": true,
   "scripts": {
     "start": "node scripts/start.js",
+    "start:s": "nodemon serverDist/index0.js",
     "build": "node scripts/build.js",
     "test": "node scripts/test.js",
     "build:c": "NODE_ENV=production BABEL_ENV=production webpack --config ./server/webpack.config.server.js && node --inspect serverDist/index.js",
-    "build:s": "NODE_ENV=development BABEL_ENV=development webpack --config ./server/webpack.config.server0.js && node server/index0.js",
+    "build:s": "NODE_ENV=development BABEL_ENV=development webpack --config ./server/webpack.config.server0.js",
     "srs": "NODE_ENV=development BABEL_ENV=development webpack --config ./server/webpack.config.server0.js && node server/index0.js",
     "serve": "node --inspect server/index0.js"
+  },
+  "nodemonConfig": {
+    "ignore": [
+      ".git",
+      "node_modules/**/node_modules"
+    ],
+    "watch": [
+      "serverDist",
+      "build"
+    ],
+    "env": {
+      "NODE_ENV": "development"
+    },
+    "ext": "js json gql"
   },
   "dependencies": {
     "@babel/core": "7.9.0",
@@ -49,6 +64,7 @@
     "jest-resolve": "24.9.0",
     "jest-watch-typeahead": "0.4.2",
     "mini-css-extract-plugin": "0.9.0",
+    "nodemon": "^2.0.4",
     "optimize-css-assets-webpack-plugin": "5.0.3",
     "pnp-webpack-plugin": "1.6.4",
     "postcss-flexbugs-fixes": "4.1.0",

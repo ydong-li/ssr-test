@@ -11,6 +11,7 @@ const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const isProd = process.env.NODE_ENV === 'production';
 
 module.exports = {
+  watch: true,
   mode: process.env.NODE_ENV,
   target: 'node',
   node: {

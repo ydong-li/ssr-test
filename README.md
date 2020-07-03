@@ -2,10 +2,13 @@ SSR 测试子项目
 
 ### 克隆项目后, 启动SSR服务器看效果
 
+    先打包好所有文件
     yarn && yarn build && yarn build:s
+    接着运行服务端代码
+    yarn start:s
 
     
-打开  http://localhost:3777/c
+打开  http://localhost:3777/c 即可查看效果
 
 ### 如果客户端代码有更改, 客户端和服务端的代码都需重新打包:
 
@@ -22,6 +25,10 @@ In the project directory, you can run:
 ### `yarn build:s`
 
 打包服务端的`js`, 并运行`node server`
+
+### `yarn start:s`
+
+调试服务端代码, create-react-app 自带
 
 ### `yarn start`
 
