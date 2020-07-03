@@ -35,7 +35,7 @@ export default [
       {
         path: "c",
         // exact: true, 
-        component: Child,
+        component: ClientRender(Child),
       },
     ],
   },
