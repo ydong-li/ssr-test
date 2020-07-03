@@ -4,6 +4,7 @@ import RenderUI from "./components/renderUI";
 import { match as matchRoutes, RouterContext } from "react-router";
 import { renderToString } from "react-dom/server";
 import Foo from "../src/foo";
+import apolloQuery from "./apolloQuery";
 const path = require("path");
 const fs = require("fs");
 
@@ -50,17 +51,18 @@ export default (app) => {
             res.redirect(302, redirect.pathname + redirect.search);
           } else if (ssrData) {
             // components 的第一个元素就是 layout 组件, 相当于 next.js 中 page
-            const Container = ssrData.components[0];
-            let props = Container.getInitialProps
-              ? await Container.getInitialProps()
-              : {};
-            ssrData.components[0] = (p) => {
-              const initialProps = { ...p, ...props };
-              return <Container {...initialProps} />;
-            };
+            // const Container = ssrData.components[0];
+            // let props = Container.getInitialProps
+            //   ? await Container.getInitialProps()
+            //   : {};
+            // ssrData.components[0] = (p) => {
+            //   const initialProps = { ...p, ...props };
+            //   return <Container {...initialProps} />;
+            // };
 
-            // console.log("ssrData", ssrData);
+            console.log("ssrData", ssrData);
 
+            const props = await apolloQuery(ssrData.components[0]);
             let Component = createElement(RouterContext, ssrData);
 
             const componentContent = renderToString(Component);

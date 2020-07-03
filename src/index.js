@@ -6,12 +6,18 @@ import "./index.css";
 import * as serviceWorker from "./serviceWorker";
 import { Router, browserHistory } from "react-router";
 import routeConfig from "./route";
+import createClient from "./apollo/client";
+import { ApolloProvider } from "react-apollo";
 
 const render =
   typeof window === "undefined" ? ReactDOM.hydrate : ReactDOM.render;
 
+const client = createClient();
+
 render(
-  <Router routes={routeConfig} history={browserHistory} />,
+  <ApolloProvider client={client}>
+    <Router routes={routeConfig} history={browserHistory} />
+  </ApolloProvider>,
   document.getElementById("root")
 );
 
