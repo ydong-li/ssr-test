@@ -24,7 +24,7 @@ In the project directory, you can run:
 
 ### `yarn build:s`
 
-打包服务端的`js`, 并运行`node server`
+打包服务端的`js`
 
 ### `yarn start:s`
 
@@ -33,7 +33,3 @@ In the project directory, you can run:
 ### `yarn start`
 
 调试前端代码, create-react-app 自带
-
-### `yarn srs`
-
-启动SSR服务器, http://localhost:3777/b

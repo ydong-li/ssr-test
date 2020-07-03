@@ -7,10 +7,7 @@
     "start:s": "nodemon serverDist/index0.js",
     "build": "node scripts/build.js",
     "test": "node scripts/test.js",
-    "build:c": "NODE_ENV=production BABEL_ENV=production webpack --config ./server/webpack.config.server.js && node --inspect serverDist/index.js",
     "build:s": "NODE_ENV=development BABEL_ENV=development webpack --config ./server/webpack.config.server0.js",
-    "srs": "NODE_ENV=development BABEL_ENV=development webpack --config ./server/webpack.config.server0.js && node server/index0.js",
-    "serve": "node --inspect server/index0.js"
   },
   "nodemonConfig": {
     "ignore": [
