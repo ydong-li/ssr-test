@@ -7,7 +7,7 @@
     "start:s": "nodemon serverDist/index0.js",
     "build": "node scripts/build.js",
     "test": "node scripts/test.js",
-    "build:s": "NODE_ENV=development BABEL_ENV=development webpack --config ./server/webpack.config.server0.js",
+    "build:s": "NODE_ENV=development BABEL_ENV=development webpack --config ./server/webpack.config.server0.js"
   },
   "nodemonConfig": {
     "ignore": [
