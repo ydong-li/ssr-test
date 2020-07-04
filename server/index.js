@@ -6,6 +6,8 @@ import ApolloMiddleware from "../src/apollo/middleware";
 
 const app = express();
 
+app.use(express.static("build"));
+
 app.use(bodyParser.json());
 //设置跨域访问
 app.all("*", function (req, res, next) {
@@ -22,7 +24,6 @@ app.get("/test", (req, res) => {
 });
 
 ApolloMiddleware(app);
-app.use(express.static("build"));
 ssr(app);
 
 app.listen(3777);

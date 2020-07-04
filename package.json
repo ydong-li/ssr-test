@@ -3,11 +3,12 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "start": "node scripts/start.js",
-    "start:s": "nodemon serverDist/index0.js",
+    "s": "node scripts/start.js",
+    "ss": "nodemon serverDist/index0.js",
+    "b": "yarn build && yarn build:s",
     "build": "node scripts/build.js",
-    "test": "node scripts/test.js",
-    "build:s": "NODE_ENV=development BABEL_ENV=development webpack --config ./server/webpack.config.server0.js"
+    "build:s": "NODE_ENV=production BABEL_ENV=production webpack --config ./server/webpack.config.server0.js",
+    "test": "node scripts/test.js"
   },
   "nodemonConfig": {
     "ignore": [
@@ -24,6 +25,7 @@
     "ext": "js json gql"
   },
   "dependencies": {
+    "@apollo/react-hooks": "^3.1.5",
     "@apollo/react-ssr": "^3.1.5",
     "@babel/core": "7.9.0",
     "@svgr/webpack": "4.3.3",

@@ -26,7 +26,7 @@ export default [
   // },
   {
     path: "/",
-    component: ClientRender(App),
+    component: App,
     childRoutes: [
       {
         path: "b",
@@ -34,7 +34,7 @@ export default [
       },
       {
         path: "c",
-        // exact: true, 
+        // exact: true,
         component: Child,
       },
     ],

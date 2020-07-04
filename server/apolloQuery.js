@@ -1,17 +1,17 @@
 import React from "react";
-import { getDataFromTree } from "@apollo/react-ssr";
-import createClient from "../src/apollo/client";
+import { getDataFromTree, renderToStringWithData} from "@apollo/react-ssr";
+// const { renderToStringWithData } = require('react-apollo/server');
 import { ApolloProvider } from "react-apollo";
 
-const client = createClient();
+export default async (Component, client) => {
 
-export default async (Component) => {
-  await getDataFromTree(ApolloWrapper({ Component }));
-  return client.extract();
+
+  // console.log("client", client);
+  const res = await renderToStringWithData(
+    <ApolloProvider client={client}>
+      <Component />
+    </ApolloProvider>
+  );
+  console.log("res is: ", res);
+  return {};
 };
-
-function ApolloWrapper({Component}) {
-  return <ApolloProvider client={client}>
-    <Component />
-  </ApolloProvider>
-}

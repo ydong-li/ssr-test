@@ -50,9 +50,8 @@ function App({ children, InitialMsg }) {
               </button>
             </header>
             <ul className="list">
-              {data &&
-                data.channels.map(({ id, name }) => {
-                  return <li key={id}>{name}</li>;
+              {data && data.channels.map(({ id, ball }) => {
+                  return <li key={id}>{ball}</li>;
                 })}
             </ul>
             {children}
