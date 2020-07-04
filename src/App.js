@@ -23,8 +23,9 @@ function App({ children, InitialMsg }) {
 
   return (
     <Query query={QUERY}>
-      {({ data, loading }) => {
+      {({ data, loading, error }) => {
         if (loading) return <p>Loading... ...</p>;
+        if (error) console.warn(error);
         return (
           <div className="App">
             <header className="App-header">
@@ -49,9 +50,10 @@ function App({ children, InitialMsg }) {
               </button>
             </header>
             <ul className="list">
-              {data && data.channels.map(({ id, name }) => {
-                return <li key={id}>{name}</li>;
-              })}
+              {data &&
+                data.channels.map(({ id, name }) => {
+                  return <li key={id}>{name}</li>;
+                })}
             </ul>
             {children}
           </div>

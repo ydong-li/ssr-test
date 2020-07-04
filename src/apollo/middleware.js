@@ -11,6 +11,6 @@ export default (app) => {
 
   server.applyMiddleware({
     app,
-    path: '/gql',
+    path: '/api/graphql',
   });
 };

@@ -38,9 +38,9 @@ export default (app) => {
     }
     console.log("Accept: ", /text\/html/.test(req.headers.accept));
     if (isPageRequest(req)) {
-      console.log("clientRoutes: ", clientRoutes);
+      // console.log("clientRoutes: ", clientRoutes);
       const { path } = req;
-      console.log("path is ", path);
+      // console.log("path is ", path);
       matchRoutes(
         { routes: clientRoutes, location: path },
         async (error, redirect, ssrData) => {
@@ -60,7 +60,7 @@ export default (app) => {
             //   return <Container {...initialProps} />;
             // };
 
-            console.log("ssrData", ssrData);
+            // console.log("ssrData", ssrData);
 
             const props = await apolloQuery(ssrData.components[0]);
             let Component = createElement(RouterContext, ssrData);
