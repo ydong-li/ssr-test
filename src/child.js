@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { timeoutPromise } from "./utils";
 import { Query } from "react-apollo";
 import gql from "graphql-tag";
 
@@ -12,9 +11,8 @@ const QUERY = gql`
   }
 `;
 
-export default function Child({ InitialNum, InitialMsg }) {
-  const [num, setNum] = useState(InitialNum || 7);
-  const [msg, setMsg] = useState(InitialMsg || "empty");
+export default function Child() {
+  const [num, setNum] = useState(7);
 
   return (
     <Query query={QUERY}>
@@ -33,13 +31,3 @@ export default function Child({ InitialNum, InitialMsg }) {
     </Query>
   );
 }
-
-// Child.displayName = "Child";
-//
-// Child.getInitialProps = async () => {
-//   return await timeoutPromise(() => {
-//     const InitialNum = typeof window === "undefined" ? 1 : 0;
-//     const InitialMsg = typeof window === "undefined" ? "server" : "client";
-//     return { InitialNum, InitialMsg };
-//   }, 30);
-// };

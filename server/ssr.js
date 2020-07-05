@@ -6,14 +6,10 @@ import { renderToString } from "react-dom/server";
 import Foo from "../src/foo";
 import apolloQuery from "./apolloQuery";
 import createClient from "../src/apollo/client";
-import { ApolloProvider } from "@apollo/react-common";
 const path = require("path");
 const fs = require("fs");
 
 const client = createClient();
-
-// global
-// let clientRoutes = []
 
 const template = fs.readFileSync(
   path.resolve(__dirname, "../build/index.html"),
@@ -35,7 +31,7 @@ export default (app) => {
     res.send("oker");
   });
 
-  app.use(async function (req, res, next) {
+  app.use(async function (req, res) {
     if (clientRoutes.length === 0) {
       res.end("ok2");
       return;
@@ -54,18 +50,6 @@ export default (app) => {
           } else if (redirect) {
             res.redirect(302, redirect.pathname + redirect.search);
           } else if (renderProps) {
-            // components 的第一个元素就是 layout 组件, 相当于 next.js 中 page
-            // const Container = renderProps.components[0];
-            // let props = Container.getInitialProps
-            //   ? await Container.getInitialProps()
-            //   : {};
-            // renderProps.components[0] = (p) => {
-            //   const initialProps = { ...p, ...props };
-            //   return <Container {...initialProps} />;
-            // };
-
-            // console.log("renderProps", renderProps);
-
             let Component = createElement(RouterContext, renderProps);
 
             const componentContent = await apolloQuery(() => Component, client);

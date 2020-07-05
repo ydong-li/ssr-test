@@ -1,7 +1,6 @@
-import React, { useState, useEffect, Children } from "react";
+import React, { useEffect } from "react";
 // import logo from './logo.svg';
 import "./App.css";
-import { timeoutPromise } from "./utils";
 import { Query } from "react-apollo";
 import gql from "graphql-tag";
 
@@ -14,8 +13,7 @@ const QUERY = gql`
   }
 `;
 
-function App({ children, InitialMsg }) {
-  const [msg, setMsg] = useState(InitialMsg || "client");
+function App({ children }) {
 
   useEffect(() => {
     window.NUMBER = 7;
@@ -39,7 +37,7 @@ function App({ children, InitialMsg }) {
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                Render from {msg}
+                SSR + Apollo
               </a>
               <button
                 onClick={() => {
@@ -63,12 +61,3 @@ function App({ children, InitialMsg }) {
 }
 
 export default App;
-
-App.displayName = "App";
-
-App.getInitialProps = async () => {
-  return await timeoutPromise(() => {
-    const InitialMsg = typeof window === "undefined" ? "server" : "client";
-    return { InitialMsg };
-  }, 10);
-};
