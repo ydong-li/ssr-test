@@ -1,32 +1,18 @@
+import React from "react";
 import App from "./App";
 import Child from "./child";
 import foo from "./foo";
 import ClientRender from "./clientRender";
+// import Loadable from "react-loadable";
+
+// const Loading = () => <p>Loading ...</p>;
 
 export default [
-  // {
-  //   component: App,
-  //   routes: [
-  //     {
-  //       path: "/",
-  //       component: App,
-  //       exact: true,
-  //       routes: [
-  //         {
-  //           path: "/b",
-  //           component: ClientRender(foo),
-  //         },
-  //         {
-  //           path: "/c",
-  //           component: ClientRender(Child),
-  //         },
-  //       ]
-  //     },
-  //   ],
-  // },
   {
     path: "/",
-    component: App,
+    component: function XWeb() {
+      return <App />;
+    },
     childRoutes: [
       {
         path: "b",
