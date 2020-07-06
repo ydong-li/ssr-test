@@ -23,7 +23,8 @@ const cssLinks = Array.from($("head link"))
 
 const addHost = (attrs) => {
   let obj = { ...attrs };
-  if (obj.src) obj.src = `http://localhost:3777${obj.src}`;
+  if (obj.src && !/^http/.test(obj.src))
+    obj.src = `http://localhost:3777${obj.src}`;
   return obj;
 };
 const scripts = Array.from($("script")).map((it) => ({
@@ -31,7 +32,7 @@ const scripts = Array.from($("script")).map((it) => ({
   content: $(it).html(),
 }));
 
-export default renderToString(
+const content = renderToString(
   <>
     {styles.map((item, idx) => (
       <style key={`style${idx}`} dangerouslySetInnerHTML={{ __html: item }} />
@@ -53,3 +54,10 @@ export default renderToString(
     ))}
   </>
 );
+
+fs.writeFile("cssAndJs.html", content, "utf8", (err) => {
+  if (err) throw err;
+  console.log("The file has been saved!");
+});
+
+export default content;

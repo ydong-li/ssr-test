@@ -21,12 +21,6 @@ export default (app) => {
     serverRender(req.query.path, res);
   });
 
-  app.post("/patchRoute", (req, res) => {
-    console.log("req is: ", req.body);
-    clientRoutes = req.body.data;
-    res.send("oker");
-  });
-
   app.use(async function (req, res) {
     if (clientRoutes.length === 0) {
       res.end("ok2");
