@@ -17,14 +17,14 @@ if (typeof PATCH_ROUTE !== "undefined") {
   window.PATCH_ROUTE(routeConfig);
 }
 
-const client = createClient();
-
-render(
-  <ApolloProvider client={client}>
-    <Router routes={routeConfig} history={browserHistory} />
-  </ApolloProvider>,
-  document.getElementById("x-web")
-);
+// const client = createClient();
+//
+// render(
+//   <ApolloProvider client={client}>
+//     <Router routes={routeConfig} history={browserHistory} />
+//   </ApolloProvider>,
+//   document.getElementById("x-web")
+// );
 
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.
