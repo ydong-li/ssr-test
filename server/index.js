@@ -5,10 +5,6 @@ import ssr from "./ssr.js";
 import ApolloMiddleware from "../src/apollo/middleware";
 
 const app = express();
-
-app.use(express.static("build"));
-
-app.use(bodyParser.json());
 //设置跨域访问
 app.all("*", function (req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");
@@ -18,6 +14,10 @@ app.all("*", function (req, res, next) {
   res.header("Content-Type", "application/json;charset=utf-8");
   next();
 });
+
+app.use(express.static("build"));
+
+app.use(bodyParser.json());
 
 app.get("/test", (req, res) => {
   res.end("ok");

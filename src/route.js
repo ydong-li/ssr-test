@@ -9,10 +9,8 @@ import ClientRender from "./clientRender";
 
 export default [
   {
-    path: "/",
-    component: function XWeb() {
-      return <App />;
-    },
+    path: "x-web",
+    component: App,
     childRoutes: [
       {
         path: "b",
@@ -25,8 +23,8 @@ export default [
       },
     ],
   },
-  // {
-  //   path: "/c",
-  //   component: ClientRender(Child),
-  // },
+  {
+    path: "p",
+    component: foo,
+  },
 ];
