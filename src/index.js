@@ -12,19 +12,19 @@ import { ApolloProvider } from "react-apollo";
 const render =
   typeof window === "undefined" ? ReactDOM.hydrate : ReactDOM.render;
 
-console.log("xxx", routeConfig);
 if (typeof PATCH_ROUTE !== "undefined") {
+  console.log("xxx", routeConfig);
   window.PATCH_ROUTE(routeConfig);
 }
 
-// const client = createClient();
-//
-// render(
-//   <ApolloProvider client={client}>
-//     <Router routes={routeConfig} history={browserHistory} />
-//   </ApolloProvider>,
-//   document.getElementById("root")
-// );
+const client = createClient();
+
+render(
+  <ApolloProvider client={client}>
+    <Router routes={routeConfig} history={browserHistory} />
+  </ApolloProvider>,
+  document.getElementById("x-web")
+);
 
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.
