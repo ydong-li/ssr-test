@@ -54,9 +54,7 @@ function serverRender(path, res) {
 
         // console.log({ props });
         const mainContent = renderToString(
-          <div id="x-web">
-            <RenderUI content={componentContent} state={props} />
-          </div>
+          <RenderUI content={componentContent} state={props} />
         );
 
         // console.log(mainContent);
