@@ -4,7 +4,7 @@ export const channelsListQuery = gql`
   query ChannelsListQuery {
     channels {
       id
-      name
+      ball
     }
   }
 `;

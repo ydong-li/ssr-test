@@ -18,7 +18,7 @@ if (typeof PATCH_ROUTE !== "undefined") {
 }
 
 // const client = createClient();
-//
+
 // render(
 //   <ApolloProvider client={client}>
 //     <Router routes={routeConfig} history={browserHistory} />

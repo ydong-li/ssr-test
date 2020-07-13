@@ -12,7 +12,7 @@ const ChannelList = ({ data: { loading, error, channels } }) => {
   return (
     <ul>
       {channels.map((ch) => (
-        <li key={ch.id}>{ch.name}</li>
+        <li key={ch.id}>{ch.ball}</li>
       ))}
     </ul>
   );

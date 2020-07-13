@@ -3,6 +3,7 @@ import React, { useEffect } from "react";
 import "./App.css";
 import { Query } from "react-apollo";
 import gql from "graphql-tag";
+import {Link} from 'react-router'
 
 const QUERY = gql`
   query channles {
@@ -48,6 +49,9 @@ function App({ children }) {
                   return <li key={id}>{ball}</li>;
                 })}
             </ul>
+            <Link to="/x-web/b">bbb</Link>  
+            <Link to="/x-web/c">ccc</Link>  
+            <Link to="/p">ppp</Link>  
             {children}
           </div>
         );
