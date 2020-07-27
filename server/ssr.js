@@ -31,78 +31,49 @@ export default (app) => {
     res.send("oker");
   });
 
-  app.use(async function (req, res, next) {
-    if (clientRoutes.length === 0) {
-      res.end("ok2");
-      return;
-    }
-    console.log("Accept: ", /text\/html/.test(req.headers.accept));
-    if (isPageRequest(req)) {
-      console.log("clientRoutes: ", clientRoutes);
+  app.use(async function (req, res) {
+    // 判断首屏请求
+    if (/text\/html/.test(req.headers.accept)) {
       const { path } = req;
-      console.log("path is ", path);
+      // 路由匹配组件
       matchRoutes(
         { routes: clientRoutes, location: path },
         async (error, redirect, ssrData) => {
-          // console.log("ssrData", ssrData);
           if (error) {
             error();
           } else if (redirect) {
             res.redirect(302, redirect.pathname + redirect.search);
           } else if (ssrData) {
-            // 用于注水的数据
-            const InitialProps = {};
-            // 把所有匹配到的组件的 getInitialProps 方法调用一遍
-            const getAllProps = ssrData.components.map((Com) => {
-              return new Promise(async (resolve) => {
-                let props = Com.getInitialProps
-                  ? await Com.getInitialProps()
-                  : {};
-
-                if (InitialProps[Com.name]) {
-                  InitialProps[Com.name].push(props);
-                } else {
-                  InitialProps[Com.name] = [props];
-                }
-                resolve((p) => {
-                  const initialProps = { ...p, ...props };
-                  return <Com {...initialProps} />;
-                });
-              });
-            });
-
-            const allProps = await Promise.all(getAllProps);
-            allProps.forEach((com, idx) => {
-              ssrData.components[idx] = com;
-            });
-            // components 的第一个元素就是 layout 组件, 相当于 next.js 中 page
+            // components 的第一个元素就是当前页面最外层的组件, 在服务端调用此组件的网络请求方法
+            // 以便输出有效内容
             const Container = ssrData.components[0];
-            let props = Container.getInitialProps
+            // getInitialProps--自定义的获取数据方法
+            let initialProps = Container.getInitialProps
               ? await Container.getInitialProps()
               : {};
+            // 用一个高阶组件把接口返回的数据作为 props 传入页面最外层组件
             ssrData.components[0] = (p) => {
-              const initialProps = { ...p, ...props };
-              return <Container {...initialProps} />;
+              const props = { ...p, ...initialProps };
+              return <Container {...props} />;
             };
-
-            // console.log("ssrData", ssrData);
-
+            // 输出有效内容的 html 字符串
             let Component = createElement(RouterContext, ssrData);
-
             const componentContent = renderToString(Component);
-
-            // console.log("componentContent: ", componentContent);
-
-            // console.log({ props });
+            // RenderUI为自定义组件, 用于处理客户端注水逻辑
             const mainContent = renderToString(
-              <RenderUI content={componentContent} state={InitialProps} />
+              <RenderUI
+                content={componentContent}
+                initialProps={initialProps}
+              />
             );
-
-            // console.log(mainContent);
-            // res.end(mainContent);
-
+            console.log(mainContent);
+            // 将内容返回给浏览器
+            res.type("html");
             res.end(
-              template.replace(/<div id="root"><\/div>/, `${mainContent}`)
+              template.replace(
+                /<div id="root"><\/div>/,
+                `<div id="root">${mainContent}</div>`
+              )
             );
           } else {
             error();

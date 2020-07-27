@@ -2,27 +2,19 @@ import React, { useState, useEffect, Children } from "react";
 // import logo from './logo.svg';
 import "./App.css";
 import { timeoutPromise } from "./utils";
+import { Link } from "react-router";
+import axios from "axios";
 
 function App({ children, InitialMsg }) {
   const [msg, setMsg] = useState(InitialMsg || "client");
 
-  // const [childProps, setChildProps] = useState({});
-
-  // let Component = null;
-  // if (children) {
-  //   Component = () => Children.only(children);
-  //   console.log(78778, Component);
-  //   if (Component.getInitialProps)
-  //     this.getInitialProps = async () => {
-  //       const props = await Component.getInitialProps;
-  //       setChildProps(props);
-  //     };
-  // }
-
   useEffect(() => {
     window.NUMBER = 7;
-    console.log(Children.only(children).type.name);
   }, [children]);
+
+  useEffect(() => {
+    setMsg(InitialMsg);
+  }, [InitialMsg]);
 
   return (
     <div className="App">
@@ -47,6 +39,8 @@ function App({ children, InitialMsg }) {
           click me
         </button>
       </header>
+      <Link to="/b">to B</Link>
+      <Link to="/c">to C</Link>
       {children}
     </div>
   );
@@ -57,8 +51,7 @@ export default App;
 App.displayName = "App";
 
 App.getInitialProps = async () => {
-  return await timeoutPromise(() => {
-    const InitialMsg = typeof window === "undefined" ? "server" : "client";
-    return { InitialMsg };
-  }, 10);
+  const InitialNum = typeof window === "undefined" ? 1 : 0;
+  const { data: InitialMsg } = await axios.get("http://localhost:3777/api");
+  return { InitialNum, InitialMsg };
 };

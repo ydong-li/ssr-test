@@ -10,7 +10,7 @@ import routeConfig from "./route";
 const render =
   typeof window === "undefined" ? ReactDOM.hydrate : ReactDOM.render;
 
-render(
+ReactDOM.render(
   <Router routes={routeConfig} history={browserHistory} />,
   document.getElementById("root")
 );

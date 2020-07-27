@@ -1,16 +1,15 @@
-import React from 'react';
+import React from "react";
 
-export default function RenderUI({ content, state }) {
+export default function RenderUI({ content, initialProps }) {
   return (
     <html>
       <body>
-        <div id="root" dangerouslySetInnerHTML={{ __html: content }} />
+        <div dangerouslySetInnerHTML={{ __html: content }} />
         <script
           dangerouslySetInnerHTML={{
-            __html: `window.__INITIAL_STATE__=${JSON.stringify(state).replace(
-              /</g,
-              '\\u003c'
-            )};`,
+            __html: `window.__INITIAL_PROPS__=${JSON.stringify(
+              initialProps
+            ).replace(/</g, "\\u003c")};`,
           }}
         />
       </body>
